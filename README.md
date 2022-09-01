@@ -8,7 +8,7 @@ A simple tool to measure DNS response frequency.
 ### Installation
 DNS Check is platform agnostic and can be installed on any system with the following command:
 ```bash
-CGO_ENABLED=0 go install github.com/wmarchesi123/dns-check
+CGO_ENABLED=0 go install github.com/wmarchesi123/dns-check@latest
 ```
 
 ### Usage
