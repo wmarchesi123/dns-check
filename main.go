@@ -17,6 +17,7 @@ limitations under the License.
 package main
 
 import (
+	"context"
 	"fmt"
 	"net"
 	"os"
@@ -35,6 +36,16 @@ func main() {
 		os.Exit(1)
 	}
 
+	r := &net.Resolver{
+		PreferGo: true,
+		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
+			d := net.Dialer{
+				Timeout: time.Millisecond * time.Duration(10000),
+			}
+			return d.DialContext(ctx, network, "1.1.1.1:53")
+		},
+	}
+
 	domain := os.Args[1]
 	total, _ := strconv.Atoi(os.Args[2])
 	requests := 0
@@ -46,12 +57,12 @@ func main() {
 
 	for i := 0; i < total; i++ {
 
-		ips, err := net.LookupIP(domain)
+		ips, err := r.LookupHost(context.Background(), domain)
 		if err != nil {
 			errors++
 		}
 
-		ip := ips[0].String()
+		ip := ips[0]
 		answers[ip]++
 		requests++
 
