@@ -1,3 +1,19 @@
+/*
+Copyright 2022 Avesha.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 package main
 
 import (
@@ -6,6 +22,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"time"
 
 	screen "github.com/aditya43/clear-shell-screen-golang"
 	p "github.com/dariubs/percent"
@@ -25,6 +42,8 @@ func main() {
 
 	answers := make(map[string]int)
 
+	start := time.Now()
+
 	for i := 0; i < total; i++ {
 
 		ips, err := net.LookupIP(domain)
@@ -33,9 +52,7 @@ func main() {
 		}
 
 		ip := ips[0].String()
-
 		answers[ip]++
-
 		requests++
 
 		table := t.NewWriter()
@@ -64,4 +81,8 @@ func main() {
 		table.Render()
 
 	}
+
+	end := time.Now()
+	time := end.Sub(start)
+	fmt.Println("\nFinished in " + strconv.FormatFloat(time.Seconds(), 'f', 2, 64) + " Seconds with " + strconv.Itoa(errors) + " Errors")
 }
