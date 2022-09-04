@@ -24,5 +24,9 @@ dns-check google.com 1000
 ```
 
 Example run:
-<img src="docs/img/ex1.png" alt="A screenshot showing a successful dns-check run." style="zoom:50%;" />
+<img src="assets/ex1.png" alt="A screenshot showing a successful dns-check run." style="zoom:50%;" />
+
+---
+
+[![Release](https://img.shields.io/github/release/wmarchesi123/dns-check.svg?style=flat-square)](https://github.com/wmarchesi123/dns-check/releases/latest) [![Go Report Card](https://goreportcard.com/badge/github.com/wmarchesi123/dns-check?style=flat-square)](https://goreportcard.com/report/github.com/wmarchesi123/dns-check) [![Go Reference](https://pkg.go.dev/badge/github.com/wmarchesi123/dns-check.svg)](https://pkg.go.dev/github.com/wmarchesi123/dns-check) 
 
