@@ -11,8 +11,6 @@ var rootCmd = &cobra.Command{
 	Use:   "dns-check",
 	Short: "A simple tool to measure DNS response frequency.",
 	Long:  `A simple tool to measure DNS response frequency.`,
-
-	// Run: func(cmd *cobra.Command, args []string) { },
 }
 
 func Execute() {
