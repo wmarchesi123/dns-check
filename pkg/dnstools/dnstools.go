@@ -26,8 +26,7 @@ func NewResolver(resolver string, total int) *net.Resolver {
 	}
 }
 
-func Run(domain string, totalString string) {
-	total, _ := strconv.Atoi(totalString)
+func Run(domain string, total int) {
 	r := NewResolver("1.1.1.1:53", total)
 
 	requests := 0
@@ -43,10 +42,13 @@ func Run(domain string, totalString string) {
 		if err != nil {
 			errors++
 		}
-
-		ip := ips[0]
-		answers[ip]++
-		requests++
+		if len(ips) > 0 {
+			ip := ips[0]
+			answers[ip]++
+			requests++
+		} else {
+			requests++
+		}
 
 		table := t.NewWriter()
 		table.SetOutputMirror(os.Stdout)
