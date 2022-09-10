@@ -1,7 +1,6 @@
 package dnstools
 
 import (
-	"context"
 	"fmt"
 	"net"
 	"os"
@@ -14,36 +13,30 @@ import (
 	t "github.com/jedib0t/go-pretty/table"
 )
 
-func NewResolver(resolver string, total int) *net.Resolver {
-	return &net.Resolver{
-		PreferGo: true,
-		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
-			d := net.Dialer{
-				Timeout: time.Millisecond * time.Duration(10000),
-			}
-			return d.DialContext(ctx, network, resolver)
-		},
+func Request(domain string) ([]net.IP, error) {
+	ips, err := net.LookupIP(domain)
+
+	if err != nil {
+		return nil, err
 	}
+
+	return ips, nil
 }
 
 func Run(domain string, total int) {
-	r := NewResolver("1.1.1.1:53", total)
-
 	requests := 0
 	errors := 0
-
 	answers := make(map[string]int)
-
 	start := time.Now()
 
 	for i := 0; i < total; i++ {
 
-		ips, err := r.LookupHost(context.Background(), domain)
+		ips, err := Request(domain)
 		if err != nil {
 			errors++
 		}
 		if len(ips) > 0 {
-			ip := ips[0]
+			ip := ips[0].String()
 			answers[ip]++
 			requests++
 		} else {
